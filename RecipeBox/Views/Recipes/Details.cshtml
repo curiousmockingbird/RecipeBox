@@ -1,0 +1,39 @@
+@{
+	Layout = "_Layout";
+}
+
+@using RecipeBox.Models;
+
+<h3>Details on @Model.Name</h3>
+
+<p><Strong>Ingredients:</Strong></p>
+<p>@Model.Ingredients</p>
+
+<p><strong>Directions:</strong></p>
+<p>@Model.Directions</p>
+
+@if (Model.JoinEntities.Count == 0)
+{
+	<p>This recipe does not have any category tags!</p>
+}
+else
+{
+	<p>This recipe is tagged in the following categories:</p>
+	<ul>
+	@foreach (var join in Model.JoinEntities)
+	{
+		<li>@Html.ActionLink($"{join.Category.Name}", "Details", "Category", new {id = join.Category.CategoryId})</li>
+		@using (Html.BeginForm("DeleteCategory", "Recipes"))
+		{
+			@Html.Hidden("joinId", (int) @join.RecipeCategoryId)
+			<input type="submit" value="Remove Tag" onclick="return confirm('Are you sure you would like to remove the tag @join.Category.Name?')"/>
+		}
+	}
+	</ul>
+}
+@using (Html.BeginForm("Delete", "Recipes"))
+{
+	@Html.Hidden("id", (int) @Model.RecipeId)
+	<input type="submit" value="Delete Recipe" onclick="return confirm('Are you sure you would like to delete the recipe for @Model.Name?')"/>
+}
+<p>@Html.ActionLink("Edit the details of this recipe", "Edit", new {id=Model.RecipeId})</p>

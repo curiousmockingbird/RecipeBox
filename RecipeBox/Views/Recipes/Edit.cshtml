@@ -1,0 +1,24 @@
+@{
+	Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Recipe
+
+<h3>Editing details of @Model.Name</h3>
+
+@using (Html.BeginForm())
+{
+	@Html.LabelFor(model => model.Name)
+	@Html.EditorFor(model => model.Name)
+	@Html.LabelFor(model => model.Ingredients)
+	@Html.EditorFor(model=> model.Ingredients)
+	@Html.LabelFor(model => model.Directions)
+	@Html.EditorFor(model => model.Directions)
+	@Html.Label("Rate this recipe from 1-5")
+	@Html.EditorFor(model => model.Rating)
+	@Html.Label("Category Tagged")
+	@Html.DropDownList("CategoryId")
+	<input type="submit" value="Edit Entry"/>
+}
+
+<p>@Html.ActionLink("Return to Details", "Details", new {id=Model.RecipeId})</p>

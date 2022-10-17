@@ -1,0 +1,20 @@
+@{
+	Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Recipe
+
+<h3>Create a new recipe</h3>
+
+@using (Html.BeginForm())
+{
+	@Html.LabelFor(model => model.Name)
+	@Html.TextBoxFor(model => model.Name)
+	@Html.LabelFor(model => model.Ingredients)
+	@Html.TextBoxFor(model => model.Ingredients)
+	@Html.LabelFor(model => model.Directions)
+	@Html.TextBoxFor(model => model.Directions)
+	@Html.Label("Add a Category Tag:")
+	@Html.DropDownList("CategoryId")
+	<input type="submit" value="Create"/>
+}
