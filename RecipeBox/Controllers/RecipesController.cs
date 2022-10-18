@@ -74,6 +74,13 @@ namespace RecipeBox.Controllers
 		{
 			_db.Entry(recipe).State = EntityState.Modified;
 			_db.SaveChanges();
+			foreach(RecipeCategory join in _db.RecipeCategory)
+			{
+				if(recipe.RecipeId == join.RecipeId && CategoryId == join.CategoryId)
+				{
+					return RedirectToAction("Details", new {id = recipe.RecipeId});
+				}
+			}
 			if (CategoryId != 0)
 			{
 				_db.RecipeCategory.Add(new RecipeCategory() { CategoryId = CategoryId, RecipeId = recipe.RecipeId});
@@ -87,6 +94,15 @@ namespace RecipeBox.Controllers
 		{
 			Recipe thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
 			_db.Recipes.Remove(thisRecipe);
+			_db.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
+		[HttpPost]
+		public ActionResult DeleteCategory(int joinId)
+		{
+			RecipeCategory thisJoin = _db.RecipeCategory.FirstOrDefault(join => join.RecipeCategoryId == joinId);
+			_db.RecipeCategory.Remove(thisJoin);
 			_db.SaveChanges();
 			return RedirectToAction("Index");
 		}

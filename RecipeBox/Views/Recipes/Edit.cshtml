@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm())
 {
+	@Html.HiddenFor(model => model.RecipeId)
 	@Html.LabelFor(model => model.Name)
 	@Html.EditorFor(model => model.Name)
 	@Html.LabelFor(model => model.Ingredients)
