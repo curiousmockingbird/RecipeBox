@@ -45,6 +45,7 @@ namespace RecipeBox.Controllers
 			recipe.User = currentUser;
 			_db.Recipes.Add(recipe);
 			_db.SaveChanges();
+      
 			if (CategoryId != 0)
 			{
 				_db.RecipeCategory.Add(new RecipeCategory() { CategoryId = CategoryId, RecipeId = recipe.RecipeId});
@@ -74,6 +75,7 @@ namespace RecipeBox.Controllers
 		{
 			_db.Entry(recipe).State = EntityState.Modified;
 			_db.SaveChanges();
+
 			foreach(RecipeCategory join in _db.RecipeCategory)
 			{
 				if(recipe.RecipeId == join.RecipeId && CategoryId == join.CategoryId)

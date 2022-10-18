@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using RecipeBox.Models;
 using System.Threading.Tasks;
 using RecipeBox.ViewModels;
+using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace RecipeBox.Controllers
 {
@@ -32,7 +34,7 @@ namespace RecipeBox.Controllers
 		[HttpPost]
 		public async Task<ActionResult> Register (RegisterViewModel model)
 		{
-			var user = new ApplicationUser { UserName = model.Email};
+			var user = new ApplicationUser { UserName = model.UserName};
 			IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 			if (result.Succeeded)
 			{
@@ -52,13 +54,19 @@ namespace RecipeBox.Controllers
 		[HttpPost]
 		public async Task<ActionResult> Login(LoginViewModel model)
 		{
-			Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
+			Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, isPersistent: true, lockoutOnFailure: false);
 			if (result.Succeeded)
 			{
 				return RedirectToAction("Index");
 			}
 			else
 			{
+				// if (model.AccessFailedCount > 3)
+				// {
+				// 	model.LockoutEnabled = true;
+				// 	model.LockoutEnd = DateTimeOffset(DateTime.Now(), 0:00:03:00:00);
+				// 	return RedirectToAction("Lockout");
+				// }
 				return View();
 			}
 		}
@@ -69,5 +77,10 @@ namespace RecipeBox.Controllers
       await _signInManager.SignOutAsync();
       return RedirectToAction("Index");
     }
+
+		public ActionResult Lockout()
+		{
+			return View();
+		}
 	}
 }
