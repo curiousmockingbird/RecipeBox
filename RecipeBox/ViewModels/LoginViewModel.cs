@@ -6,8 +6,9 @@ namespace RecipeBox.ViewModels
   {
     public string UserName { get; set; }
     public string Password { get; set; }
-    public virtual bool LockoutEnabled {get; set;}
-    public virtual DateTimeOffset? LockoutEnd {get; set;}
-    public virtual int AccessFailedCount {get; set;}
+    public virtual string PasswordHash { get; set; }
+    // public virtual bool LockoutEnabled {get; set;}
+    // public virtual DateTimeOffset? LockoutEnd {get; set;}
+    // public virtual int AccessFailedCount {get; set;}
   }
 }

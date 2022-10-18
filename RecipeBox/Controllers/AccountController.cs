@@ -34,7 +34,7 @@ namespace RecipeBox.Controllers
 		[HttpPost]
 		public async Task<ActionResult> Register (RegisterViewModel model)
 		{
-			var user = new ApplicationUser { UserName = model.UserName};
+			var user = new ApplicationUser { UserName = model.UserName, FullName = model.FullName, DOB = model.DOB};
 			IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 			if (result.Succeeded)
 			{

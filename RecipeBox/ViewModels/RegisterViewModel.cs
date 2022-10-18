@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace RecipeBox.ViewModels
 {
@@ -9,10 +10,20 @@ namespace RecipeBox.ViewModels
 		[Display(Name = "User Name")]
 		public string UserName {get; set;}
     
-		// [Required]
-		// [EmailAddress]
-		// [Display(Name = "Email")]
-		// public string Email {get; set;}
+		[Required]
+		[EmailAddress]
+		[Display(Name = "Email")]
+		public string Email {get; set;}
+
+		[Required]
+		[DataType(DataType.Text)]
+		[Display(Name = "Full Name")]
+		public string FullName { get; set; }
+
+		[Required]
+		[Display(Name = "Birth Date")]
+		[DataType(DataType.Date)]
+		public DateTime DOB { get; set; }
 
 		[Required]
 		[DataType(DataType.Password)]
