@@ -23,17 +23,27 @@ namespace RecipeBox.Controllers
       _db = db;
     }
 
-		public async Task<ActionResult> Index()
+		public async Task<ActionResult> Index(string sortOrder)
 		{
 			var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 			var currentUser = await _userManager.FindByIdAsync(userId);
-			var userRecipes = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).ToList();
-			return View(userRecipes);
+			switch (sortOrder)
+			{
+				case "rating":
+					var userRecipesRating = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).OrderByDescending(recipe => recipe.Rating).ToList();
+					return View(userRecipesRating);
+				default:
+					var userRecipesName = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).OrderBy(recipe => recipe.Name).ToList();
+					return View(userRecipesName);
+			}
 		}
 
-		public ActionResult Create()
+		public async Task<ActionResult> Create()
 		{
-			ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
+			var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var currentUser = await _userManager.FindByIdAsync(userId);
+			List<Category> userCategories = _db.Categories.Where(entry => entry.User.Id == currentUser.Id).ToList();
+			ViewBag.CategoryId = new SelectList(userCategories, "CategoryId", "Name");
 			return View();
 		}
 
@@ -63,10 +73,13 @@ namespace RecipeBox.Controllers
 			return View(thisRecipe);
 		}
 
-		public ActionResult Edit(int id)
+		public async Task<ActionResult> Edit(int id)
 		{
 			Recipe thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
-			ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
+			var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var currentUser = await _userManager.FindByIdAsync(userId);
+			List<Category> userCategories = _db.Categories.Where(entry => entry.User.Id == currentUser.Id).ToList();
+			ViewBag.CategoryId = new SelectList(userCategories, "CategoryId", "Name");
 			return View(thisRecipe);
 		}
 
@@ -107,6 +120,13 @@ namespace RecipeBox.Controllers
 			_db.RecipeCategory.Remove(thisJoin);
 			_db.SaveChanges();
 			return RedirectToAction("Index");
+		}
+
+		public ActionResult Search(string query)
+		{
+			List<Recipe> thisSearch = _db.Recipes.Where(recipe => recipe.Ingredients.Contains(query)).ToList();
+			ViewBag.SearchQuery = query;
+			return View(thisSearch);
 		}
   }
 }

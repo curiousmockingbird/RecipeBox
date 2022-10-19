@@ -4,7 +4,18 @@
 
 @using RecipeBox.Models;
 
+@using (Html.BeginForm("Search", "Recipes"))
+{
+	@Html.Label("Find Recipes by ingredient")
+	@Html.TextBox("query")
+	<input type="submit" value="Search"/>
+}
+
 <h3>All recipes:</h3>
+
+@Html.ActionLink("Sort by Rating", "Index", new {sortOrder = "rating"})
+<br>
+@Html.ActionLink("Sort by Name", "Index")
 
 @if (Model.Count == 0)
 {
