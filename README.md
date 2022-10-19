@@ -36,7 +36,7 @@ An interface for storing recipes. Has login functionality with unique Categories
 
 		git clone https://github.com/curiousmockingbird/RecipeBox
 
-* Enter the cloned project folder "/RecipeBox/RecipeBox" and type:
+* Enter the cloned project folder "/RecipeBox/RecipeBox" and type in your terminal:
 
 		dotnet restore
 
