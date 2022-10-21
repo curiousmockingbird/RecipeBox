@@ -63,7 +63,7 @@ followed by
 
 		dotnet run
 
-Follwing this you can navigate to http://localhost:5000 in the browser of your choice to navigate around the interface.  
+Following this you can navigate to http://localhost:5000 in the browser of your choice to navigate around the interface.  
 
 ## Known Bugs
 
