@@ -4,7 +4,7 @@
 
 ## Description
 
-An interface for storing recipes. Has login functionality with unique Categories/Recipes for individual users, ability to search by listed ingredient, ability to rate and sort by rating and name, and other lil nice bits. CSS styling is basic at the time of this writing but that may change.
+An interface for storing recipes. Has login functionality with unique Categories/Recipes for individual users, ability to search by listed ingredient, ability to sort by rating and name, and other lil nice bits. CSS styling is basic at the time of this writing but that may change.
 
 ## Features
 
