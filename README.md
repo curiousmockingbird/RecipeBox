@@ -67,7 +67,7 @@ Follwing this you can navigate to http://localhost:5000 in the browser of your c
 
 ## Known Bugs
 
-For some reason, User.Identity.ApplicationUserProperty does not point to what we generally understand to be the default table (RecipeBox.Models.ApplicationUser in this case) and as such we were unable to call any ApplicationUser property more than a Name field for the user on the account index page.
+No known bugs. App woks as expected.
 
 ## License
 
